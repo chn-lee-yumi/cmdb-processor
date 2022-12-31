@@ -1,0 +1,28 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    #- name: enable debug interface
+    #  uses: chn-lee-yumi/debugger-action@master
+        
+    - name: Build Docker image
+      run: |
+        docker version
+        # 登录阿里云镜像仓库
+        docker login --username=${{ secrets.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }} registry.cn-guangzhou.aliyuncs.com
+        # 使用Dockerfile构建镜像
+        docker build . --file Dockerfile --tag registry.cn-guangzhou.aliyuncs.com/yumi-cmdb/cmdb-processor:beta
+        # 推送镜像到镜像仓库
+        docker push registry.cn-guangzhou.aliyuncs.com/yumi-cmdb/cmdb-processor:beta
+        
