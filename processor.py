@@ -4,7 +4,8 @@ import pymysql  # pymysql
 from kafka import KafkaConsumer  # kafka-python
 from pymysql.converters import escape_string
 
-db = pymysql.connect(host="10.0.0.5", user="root", passwd="123456", db="cmdb")
+#db = pymysql.connect(host="10.0.0.5", user="root", passwd="123456", db="cmdb")
+db = pymysql.connect(host="10.9.0.5", user="cmdb", passwd="cmdb", db="cmdb")
 cur = db.cursor()
 
 
@@ -48,7 +49,8 @@ def write_db(msg):
 def run_consumer():
     consumer = KafkaConsumer(
         'cmdb-receiver',
-        bootstrap_servers='10.0.0.5:9092',
+        #bootstrap_servers='10.0.0.5:9092',
+        bootstrap_servers='kafka.nic-kafka.svc.cluster.local:9092',
         value_deserializer=json.loads,
         auto_offset_reset="earliest",
         enable_auto_commit=False,
