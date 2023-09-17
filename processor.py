@@ -1,8 +1,8 @@
 import datetime
 import json
 import pymysql  # pymysql
-import uuid
-import random
+# import uuid
+# import random
 from kafka import KafkaConsumer  # kafka-python
 from pymysql.converters import escape_string
 
@@ -33,10 +33,12 @@ def write_db(msg):
     # 如果不在就忽略
     else:  # 如果不在就执行INSERT
         cur.execute(
-            "INSERT INTO machine (id,main_ip,device_system_info,system_info,cpu_info,memory_info,load_avg,interfaces) "
-            "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')" %
+            # "INSERT INTO machine (id,main_ip,device_system_info,system_info,cpu_info,memory_info,load_avg,interfaces) "
+            # "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')" %
+            "INSERT INTO machine (main_ip,device_system_info,system_info,cpu_info,memory_info,load_avg,interfaces) "
+            "VALUES ('%s','%s','%s','%s','%s','%s','%s')" %
             (
-                str(uuid.uuid1(random.randint(0, 2 ** 48 - 1))),
+                # str(uuid.uuid1(random.randint(0, 2 ** 48 - 1))),
                 msg["network_info"]["main_ip"],
                 escape_string(json.dumps(msg["device_system_info"])),
                 escape_string(json.dumps(msg["system_info"])),
