@@ -1,6 +1,7 @@
 import datetime
 import json
 import pymysql  # pymysql
+import uuid
 from kafka import KafkaConsumer  # kafka-python
 from pymysql.converters import escape_string
 
