@@ -29,21 +29,21 @@ def write_db(msg):
             ))
         cur.execute("COMMIT")
     # 如果不在就忽略
-    # else:  # 如果不在就执行INSERT
-    #     cur.execute(
-    #         "INSERT INTO machine (id,main_ip,device_system_info,system_info,cpu_info,memory_info,load_avg,interfaces) "
-    #         "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')" %
-    #         (
-    #             str(uuid.uuid1(random.randint(0, 2 ** 48 - 1))),
-    #             msg["network_info"]["main_ip"],
-    #             escape_string(json.dumps(msg["device_system_info"])),
-    #             escape_string(json.dumps(msg["system_info"])),
-    #             escape_string(json.dumps(msg["cpu_info"])),
-    #             escape_string(json.dumps(msg["memory_info"])),
-    #             escape_string(json.dumps(msg["load_avg"])),
-    #             escape_string(json.dumps(msg["network_info"]["interfaces"])),
-    #         ))
-    # cur.execute("COMMIT")
+    else:  # 如果不在就执行INSERT
+        cur.execute(
+            "INSERT INTO machine (id,main_ip,device_system_info,system_info,cpu_info,memory_info,load_avg,interfaces) "
+            "VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')" %
+            (
+                str(uuid.uuid1(random.randint(0, 2 ** 48 - 1))),
+                msg["network_info"]["main_ip"],
+                escape_string(json.dumps(msg["device_system_info"])),
+                escape_string(json.dumps(msg["system_info"])),
+                escape_string(json.dumps(msg["cpu_info"])),
+                escape_string(json.dumps(msg["memory_info"])),
+                escape_string(json.dumps(msg["load_avg"])),
+                escape_string(json.dumps(msg["network_info"]["interfaces"])),
+            ))
+    cur.execute("COMMIT")
 
 
 def run_consumer():
